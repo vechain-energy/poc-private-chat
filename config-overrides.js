@@ -1,6 +1,6 @@
 const webpack = require('webpack')
 
-module.exports = function override(config, env) {
+module.exports = function override (config, env) {
   // do stuff with the webpack config...
 
   // ignore source map warnings for older node modules
@@ -20,7 +20,7 @@ module.exports = function override(config, env) {
 
   config.plugins.push(
     new webpack.ProvidePlugin({
-      process: "process/browser"
+      process: 'process/browser'
     }),
     new webpack.ProvidePlugin({
       process: 'process/browser',

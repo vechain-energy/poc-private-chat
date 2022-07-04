@@ -1,9 +1,9 @@
 import { picasso } from '../common/picasso'
 import { Avatar } from 'antd'
 
-export default function CustomAvatar({ address, size = 32 }) {
-  if(!address) { return }
-  
+export default function CustomAvatar ({ address, size = 32 }) {
+  if (!address) { return }
+
   return (
     <Avatar
       size={size}

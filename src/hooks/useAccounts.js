@@ -1,20 +1,20 @@
 import { useState, useEffect } from 'react'
-import { ethers } from "@vechain/ethers"
+import { ethers } from '@vechain/ethers'
 
-export function useAccounts() {
+export function useAccounts () {
   const [privateKeys, setPrivateKeys] = useState(String(window.localStorage.getItem('privateKeys') || '').split(','))
   const [accounts, setAccounts] = useState([])
 
-  function add() {
-    const { privateKey } = ethers.Wallet.createRandom();
+  function add () {
+    const { privateKey } = ethers.Wallet.createRandom()
     setPrivateKeys(privateKeys => [...privateKeys, privateKey])
   }
 
-  function remove(privateKeyToRemove) {
+  function remove (privateKeyToRemove) {
     setPrivateKeys(privateKeys => privateKeys.filter(privateKey => privateKey !== privateKeyToRemove))
   }
 
-  function buildAccountList() {
+  function buildAccountList () {
     const accounts = privateKeys
       .filter(privateKey => !!privateKey)
       .map(privateKey => {
@@ -32,7 +32,6 @@ export function useAccounts() {
     if (!accounts.length) {
       add()
     }
-
   }
 
   useEffect(buildAccountList, [privateKeys])

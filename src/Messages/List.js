@@ -2,13 +2,12 @@ import { useState, useEffect, useCallback } from 'react'
 import { Button, Input, Typography, Comment, List, Form, Alert, Card, Row, Col, Popconfirm } from 'antd'
 import Avatar from '../Accounts/Avatar'
 import { useContract } from '../hooks/useContract'
-import { DeleteOutlined, MessageOutlined } from '@ant-design/icons';
-
+import { DeleteOutlined, MessageOutlined } from '@ant-design/icons'
 
 const { Text, Paragraph, Link } = Typography
 const { TextArea } = Input
 
-export default function MessageList({ account }) {
+export default function MessageList ({ account }) {
   const { getMessages, sendMessage, deleteMessage, setName, getNameFor } = useContract(account)
   const [profile, setProfile] = useState({})
   const [messages, setMessages] = useState([])
@@ -23,13 +22,12 @@ export default function MessageList({ account }) {
     setProfile({ name, address: account?.address })
   }, [getNameFor, account])
 
-  async function handleSetUsername() {
+  async function handleSetUsername () {
     setLoading(true)
     await setName(username)
     await fetchProfile()
     setLoading(false)
   }
-
 
   const handleRemove = (tokenId) => async () => {
     setLoading(true)
@@ -49,11 +47,11 @@ export default function MessageList({ account }) {
           <Paragraph type='secondary' style={{ whiteSpace: 'pre-wrap' }}>Encrypted version: {encryptedMessage}</Paragraph>
         </>
       ),
-      datetime: <> Message #{tokenId} in Tx <Link href={`https://explore-testnet.vechain.org/transactions/${txId}#clauses`} target='_blank' rel='noreferrer' > {txId}</Link></>,
+      datetime: <> Message #{tokenId} in Tx <Link href={`https://explore-testnet.vechain.org/transactions/${txId}#clauses`} target='_blank' rel='noreferrer'> {txId}</Link></>,
       actions: [
         <Popconfirm
           key='remove'
-          title="Delete Message"
+          title='Delete Message'
           onConfirm={handleRemove(tokenId)}
         >
           <Button danger size='small' type='link' icon={<DeleteOutlined />} />
@@ -64,23 +62,19 @@ export default function MessageList({ account }) {
     })))
   }
 
-
   useEffect(() => {
     fetchProfile()
   }, [fetchProfile])
 
-
-  async function handleSendMessage() {
+  async function handleSendMessage () {
     setError()
     setLoading(true)
     try {
       await sendMessage(to, text)
       await fetchMessages()
-    }
-    catch (err) {
+    } catch (err) {
       setError(err.message)
-    }
-    finally {
+    } finally {
       setLoading(false)
     }
   }
@@ -98,12 +92,11 @@ export default function MessageList({ account }) {
           <Input placeholder='set your username' onChange={(e) => setUsername(e.target.value)} />
         </Col>
         <Col span={4}>
-          <Button block type="primary" onClick={handleSetUsername} loading={loading}>set username</Button>
+          <Button block type='primary' onClick={handleSetUsername} loading={loading}>set username</Button>
         </Col>
       </Row>
     )
   }
-
 
   return (
     <>
@@ -112,7 +105,7 @@ export default function MessageList({ account }) {
         <List
           dataSource={messages}
           header={`${messages.length} ${messages.length > 1 ? 'Messages' : 'Message'}`}
-          itemLayout="horizontal"
+          itemLayout='horizontal'
           renderItem={(props) => <Comment {...props} />}
           locale={{ emptyText: <></> }}
         />
@@ -130,7 +123,7 @@ export default function MessageList({ account }) {
                 <TextArea rows={4} onChange={(e) => setText(e.target.value)} value={text} placeholder='Message to send' />
               </Form.Item>
               <Form.Item>
-                <Button htmlType="submit" loading={loading} onClick={handleSendMessage} type="primary">
+                <Button htmlType='submit' loading={loading} onClick={handleSendMessage} type='primary'>
                   Send Message
                 </Button>
               </Form.Item>

@@ -1,13 +1,13 @@
 import { useState, useEffect, useCallback } from 'react'
 import { Button, List, Typography, Popconfirm } from 'antd'
-import { DeleteOutlined, CheckOutlined, UserAddOutlined } from '@ant-design/icons';
+import { DeleteOutlined, CheckOutlined, UserAddOutlined } from '@ant-design/icons'
 import Avatar from './Avatar'
 import { useAccounts } from '../hooks/useAccounts'
 import { useContract } from '../hooks/useContract'
 
 const { Text } = Typography
 
-export default function Accounts({ onSelect, account: selectedAccount }) {
+export default function Accounts ({ onSelect, account: selectedAccount }) {
   const { accounts, add, remove } = useAccounts()
   const { getNameFor } = useContract()
   const [accountsWithNames, setAccountsWithNames] = useState([])
@@ -27,11 +27,10 @@ export default function Accounts({ onSelect, account: selectedAccount }) {
     loadNames()
   }, [loadNames])
 
-
   return (
     <List
       header={<>Accounts</>}
-      itemLayout="horizontal"
+      itemLayout='horizontal'
       dataSource={accountsWithNames}
       loadMore={<Button type='link' onClick={add} icon={<UserAddOutlined />}>add new account</Button>}
       renderItem={account => (
@@ -39,12 +38,12 @@ export default function Accounts({ onSelect, account: selectedAccount }) {
           actions={[
             <Popconfirm
               key='remove'
-              title="Delete Account"
+              title='Delete Account'
               onConfirm={handleRemove(account)}
             >
-              <Button danger type='text' shape="circle" icon={<DeleteOutlined />} />
+              <Button danger type='text' shape='circle' icon={<DeleteOutlined />} />
             </Popconfirm>,
-            <Button key='select' type={selectedAccount?.address === account.address ? 'primary' : 'secondary'} shape="circle" onClick={handleSelect(account)}>{selectedAccount?.address === account.address ? <CheckOutlined /> : ' '}</Button>
+            <Button key='select' type={selectedAccount?.address === account.address ? 'primary' : 'secondary'} shape='circle' onClick={handleSelect(account)}>{selectedAccount?.address === account.address ? <CheckOutlined /> : ' '}</Button>
           ]}
         >
           <List.Item.Meta
@@ -52,11 +51,8 @@ export default function Accounts({ onSelect, account: selectedAccount }) {
             onClick={handleSelect(account)}
             title={
               account.name
-                ?
-                <Text>{account.name} <small><Text type='secondary' copyable>{account.address}</Text></small></Text>
-                :
-
-                <Text>Not signed up yet <small><Text type='secondary' copyable>{account.address}</Text></small></Text>
+                ? <Text>{account.name} <small><Text type='secondary' copyable>{account.address}</Text></small></Text>
+                : <Text>Not signed up yet <small><Text type='secondary' copyable>{account.address}</Text></small></Text>
             }
           />
         </List.Item>
