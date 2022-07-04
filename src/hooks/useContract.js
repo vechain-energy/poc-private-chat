@@ -19,8 +19,8 @@ const connex = new Connex({
 
 export function useContract({ wallet } = {}) {
   async function getNameFor(address) {
-    const { decoded } = await connex.thor.account(contractAddress).method(abiByName.getNameFor).call(address)
-    return decoded.name
+    const { decoded: { '0': name } } = await connex.thor.account(contractAddress).method(abiByName.nameByAddress).call(address)
+    return name
   }
 
   async function setName(newName) {
@@ -78,7 +78,7 @@ export function useContract({ wallet } = {}) {
     const clauseForRecipient = await connex.thor.account(contractAddress).method(abiByName.safeMint).asClause(to, encryptedMessageForRecipient)
     clauses.push(clauseForRecipient)
 
-    if ( to !== wallet.address ) {
+    if (to !== wallet.address) {
       const clauseForSender = await connex.thor.account(contractAddress).method(abiByName.safeMint).asClause(wallet.address, encryptedMessageForSender)
       clauses.push(clauseForSender)
     }

@@ -28,14 +28,6 @@ contract Messages is
         emit SetName(msg.sender, nameByAddress[msg.sender]);
     }
 
-    function getNameFor(address _userAddress)
-        public
-        view
-        returns (string memory name)
-    {
-        return nameByAddress[_userAddress];
-    }
-
     function safeMint(address to, string memory uri) public {
         uint256 tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();

@@ -1,5 +1,5 @@
 {
-  "address": "0x2Bf3d29958749bE984E3872D6218e4F53ce8c7A7",
+  "address": "0x084055c3402fA43b66729de36567180BaD385f20",
   "abi": [
     {
       "inputs": [],
@@ -183,25 +183,6 @@
           "internalType": "address",
           "name": "",
           "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "_userAddress",
-          "type": "address"
-        }
-      ],
-      "name": "getNameFor",
-      "outputs": [
-        {
-          "internalType": "string",
-          "name": "name",
-          "type": "string"
         }
       ],
       "stateMutability": "view",
