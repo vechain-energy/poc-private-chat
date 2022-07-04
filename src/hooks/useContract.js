@@ -29,7 +29,7 @@ export function useContract ({ wallet } = {}) {
     await waitForTransactionId(txId)
   }
 
-  async function getMessages () {
+  const getMessages = useCallback(async function getMessages () {
     const messages = []
 
     // get current count of tokens
@@ -60,7 +60,7 @@ export function useContract ({ wallet } = {}) {
     }
 
     return messages
-  }
+  }, [getNameFor, wallet])
 
   async function getTxForMessage (tokenId) {
     const setNameEvent = contract.event(abiByName.Transfer)

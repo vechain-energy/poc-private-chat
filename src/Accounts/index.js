@@ -24,6 +24,12 @@ export default function Accounts ({ onSelect, account: selectedAccount }) {
   }, [getNameFor, accounts])
 
   useEffect(() => {
+    if (!selectedAccount && onSelect) {
+      onSelect(accounts[0])
+    }
+  }, [selectedAccount, accounts, onSelect])
+
+  useEffect(() => {
     loadNames()
   }, [loadNames])
 
@@ -33,6 +39,7 @@ export default function Accounts ({ onSelect, account: selectedAccount }) {
       itemLayout='horizontal'
       dataSource={accountsWithNames}
       loadMore={<Button type='link' onClick={add} icon={<UserAddOutlined />}>add new account</Button>}
+      loading={!accountsWithNames.length}
       renderItem={account => (
         <List.Item
           actions={[

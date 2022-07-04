@@ -6,6 +6,7 @@ import { DeleteOutlined, MessageOutlined } from '@ant-design/icons'
 
 const { Text, Paragraph, Link } = Typography
 const { TextArea } = Input
+const EXPLORER_URL = process.env.EXPLORER_URL || 'https://explore-testnet.vechain.org'
 
 export default function MessageList ({ account }) {
   const { getMessages, sendMessage, deleteMessage, setName, getNameFor } = useContract(account)
@@ -36,31 +37,12 @@ export default function MessageList ({ account }) {
     setLoading(false)
   }
 
-  const fetchMessages = async function () {
+  const fetchMessages = useCallback(async function () {
+    setLoading(true)
     const messages = await getMessages()
-    setMessages(messages.map(({ tokenId, payload, senderAddress, senderName, txId, encryptedMessage }) => ({
-      author: <Text>{senderAddress === account.address ? 'sent to' : 'received from'} {senderName || senderAddress}</Text>,
-      avatar: <Avatar address={senderAddress} />,
-      content: (
-        <>
-          <Paragraph style={{ whiteSpace: 'pre-wrap' }}>{payload.message}</Paragraph>
-          <Paragraph type='secondary' style={{ whiteSpace: 'pre-wrap' }}>Encrypted version: {encryptedMessage}</Paragraph>
-        </>
-      ),
-      datetime: <> Message #{tokenId} in Tx <Link href={`https://explore-testnet.vechain.org/transactions/${txId}#clauses`} target='_blank' rel='noreferrer'> {txId}</Link></>,
-      actions: [
-        <Popconfirm
-          key='remove'
-          title='Delete Message'
-          onConfirm={handleRemove(tokenId)}
-        >
-          <Button danger size='small' type='link' icon={<DeleteOutlined />} />
-        </Popconfirm>,
-        <Button key='reply' size='small' type='link' onClick={() => setTo(senderAddress)} icon={<MessageOutlined />}>reply</Button>
-
-      ]
-    })))
-  }
+    setMessages(messages)
+    setLoading(false)
+  }, [getMessages])
 
   useEffect(() => {
     fetchProfile()
@@ -81,8 +63,7 @@ export default function MessageList ({ account }) {
 
   useEffect(() => {
     fetchMessages()
-    // eslint-disable-next-line
-  }, [account])
+  }, [fetchMessages])
 
   if (!profile.name) {
     return (
@@ -106,8 +87,32 @@ export default function MessageList ({ account }) {
           dataSource={messages}
           header={`${messages.length} ${messages.length > 1 ? 'Messages' : 'Message'}`}
           itemLayout='horizontal'
-          renderItem={(props) => <Comment {...props} />}
           locale={{ emptyText: <></> }}
+          loading={loading}
+          renderItem={({ tokenId, payload, senderAddress, senderName, txId, encryptedMessage }) => (
+            <Comment
+              author={<Text>{senderAddress === account.address ? 'sent to' : 'received from'} {senderName || senderAddress}</Text>}
+              avatar={<Avatar address={senderAddress} />}
+              content={(
+                <>
+                  <Paragraph style={{ whiteSpace: 'pre-wrap' }}>{payload.message}</Paragraph>
+                  <Paragraph type='secondary' style={{ whiteSpace: 'pre-wrap' }}><small>Encrypted version: {encryptedMessage}</small></Paragraph>
+                </>
+              )}
+              datetime={<> Message #{tokenId} in Tx <Link href={`${EXPLORER_URL}/transactions/${txId}#clauses`} target='_blank' rel='noreferrer'> {txId}</Link></>}
+              actions={[
+                <Popconfirm
+                  key='remove'
+                  title='Delete Message'
+                  onConfirm={handleRemove(tokenId)}
+                >
+                  <Button danger size='small' type='link' icon={<DeleteOutlined />} />
+                </Popconfirm>,
+                <Button key='reply' size='small' type='link' onClick={() => setTo(senderAddress)} icon={<MessageOutlined />}>reply</Button>
+
+              ]}
+            />
+          )}
         />
       </Card>
       <br />
