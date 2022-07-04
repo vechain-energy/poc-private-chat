@@ -1,0 +1,30 @@
+variables:
+  PUBLIC_URL: "https://private-chat.dev.vechain.energy/"
+
+stages:
+  - build
+  - deploy
+
+build:
+  stage: build
+  image: node:16
+  script:
+    - yarn install --production
+    - yarn build
+  artifacts:
+    paths:
+      - build
+    expire_in: 1 day
+
+
+pages:
+  stage: deploy
+  script:
+    - mv public _public
+    - mv build public
+  environment:
+    name: "Gitlab Pages"
+    url: $PUBLIC_URL
+  artifacts:
+    paths:
+    - public
