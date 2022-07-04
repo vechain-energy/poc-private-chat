@@ -3,19 +3,35 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ant-design/icons": "^4.7.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
+    "@vechain/connex": "^2.0.11",
+    "@vechain/ethers": "^4.0.27-5",
+    "antd": "^4.21.5",
+    "assert": "^2.0.0",
+    "bent": "^7.3.12",
+    "crypto-browserify": "^3.12.0",
+    "eth-crypto": "^2.3.0",
+    "https-browserify": "^1.0.0",
+    "mersenne-twister": "^1.1.0",
+    "os-browserify": "^0.3.0",
+    "path-browserify": "^1.0.1",
+    "process": "^0.11.10",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
+    "stream-browserify": "^3.0.0",
+    "stream-http": "^3.2.0",
+    "thor-devkit": "^2.0.5",
     "web-vitals": "^2.1.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
+    "eject": "react-app-rewired eject"
   },
   "eslintConfig": {
     "extends": [
@@ -34,5 +50,19 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "standard": {
+    "env": {
+      "browser": true
+    }
+  },
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.0.6",
+    "@nomiclabs/hardhat-waffle": "^2.0.3",
+    "@openzeppelin/contracts": "^4.7.0",
+    "@vechain.energy/hardhat-thor": "^0.2.4",
+    "hardhat": "^2.9.9",
+    "react-app-rewired": "^2.2.1",
+    "standard": "^17.0.0"
   }
 }
