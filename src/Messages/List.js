@@ -9,7 +9,7 @@ const { Text, Paragraph, Link } = Typography
 const { TextArea } = Input
 
 export default function MessageList({ account }) {
-  const { getMessagesFor, sendMessage, deleteMessage, setName, getNameFor } = useContract(account)
+  const { getMessages, sendMessage, deleteMessage, setName, getNameFor } = useContract(account)
   const [profile, setProfile] = useState({})
   const [messages, setMessages] = useState([])
   const [text, setText] = useState()
@@ -39,7 +39,7 @@ export default function MessageList({ account }) {
   }
 
   const fetchMessages = async function () {
-    const messages = await getMessagesFor(account.address)
+    const messages = await getMessages()
     setMessages(messages.map(({ tokenId, payload, senderAddress, senderName, txId, encryptedMessage }) => ({
       author: <Text>{senderAddress === account.address ? 'sent to' : 'received from'} {senderName || senderAddress}</Text>,
       avatar: <Avatar address={senderAddress} />,

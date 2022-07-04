@@ -9,7 +9,7 @@ function App() {
 
   return (
     <Row gutter={[16, 16]}>
-      <Col offset={2} span={20}><Accounts onSelect={setSelectedAccount} /></Col>
+      <Col offset={2} span={20}><Accounts onSelect={setSelectedAccount} account={selectedAccount} /></Col>
       <Col offset={2} span={20}><Messages account={selectedAccount} /></Col>
     </Row >
   );
