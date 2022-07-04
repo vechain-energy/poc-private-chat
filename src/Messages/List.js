@@ -21,6 +21,7 @@ export default function MessageList ({ account }) {
   const fetchProfile = useCallback(async function () {
     const name = await getNameFor(account.address)
     setProfile({ name, address: account?.address })
+    setTo(account?.address)
   }, [getNameFor, account])
 
   async function handleSetUsername () {
