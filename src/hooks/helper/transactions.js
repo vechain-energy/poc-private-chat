@@ -12,7 +12,7 @@ const connex = new Connex({
   network: 'test'
 })
 
-export async function sendTransactionWithWallet (clauses, wallet) {
+export async function sendTransactionWithWallet(clauses, wallet) {
   const post = bent('POST', 'json')
   const transaction = new Transaction({
     chainTag: Number.parseInt(connex.thor.genesis.id.slice(-2), 16),
@@ -63,8 +63,9 @@ export async function sendTransactionWithWallet (clauses, wallet) {
   return id
 }
 
-export async function waitForTransactionId (id) {
-  message.loading(<>waiting for transaction <Typography.Link href={`${EXPLORER_URL}/transactions/${id}`} rel='noreferrer' target='_blank'>{id.slice(0, 4)}…{id.slice(-4)}</Typography.Link></>, 10)
+export async function waitForTransactionId(id) {
+
+  message.loading({ content: <>waiting for transaction <Typography.Link href={`${EXPLORER_URL}/transactions/${id}`} rel='noreferrer' target='_blank'>{id.slice(0, 4)}…{id.slice(-4)}</Typography.Link></>, key: id, duration: 0 })
   const transaction = connex.thor.transaction(id)
   let receipt
   do {
@@ -80,15 +81,15 @@ export async function waitForTransactionId (id) {
 
     const revertReasons = explainedTransaction.map(({ revertReason }) => revertReason).join(' ,')
 
-    message.error(revertReasons || 'Transaction was reverted')
+    message.error({ content: revertReasons || 'Transaction was reverted', key: id, duration: 3 })
     throw new Error(revertReasons || 'Transaction was reverted')
   }
-  message.success('transaction successful')
+  message.success({ content: 'transaction successful', key: id, duration: 3 })
 
   return transaction
 }
 
-export async function getPublicKeyForSenderOfTransactionId (txId) {
+export async function getPublicKeyForSenderOfTransactionId(txId) {
   // get raw transaction
   const getRawTransaction = bent(`${NETWORK_URL}/transactions`, 'GET', 'json')
   const { raw } = await getRawTransaction(`/${txId}?raw=true`)
