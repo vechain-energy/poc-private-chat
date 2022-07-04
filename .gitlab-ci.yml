@@ -1,5 +1,5 @@
 variables:
-  PUBLIC_URL: "https://private-chat.dev.vechain.energy/"
+  PUBLIC_URL: http://vechain.energy.gitlab.io/examples/private-chat
 
 stages:
   - build
