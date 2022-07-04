@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { Button, List, Typography, Popconfirm } from 'antd'
-import { DeleteOutlined, CheckOutlined, UserAddOutlined } from '@ant-design/icons'
+import { DeleteOutlined, CheckOutlined, PlusOutlined } from '@ant-design/icons'
 import Avatar from './Avatar'
 import { useAccounts } from '../hooks/useAccounts'
 import { useContract } from '../hooks/useContract'
@@ -38,7 +38,7 @@ export default function Accounts ({ onSelect, account: selectedAccount }) {
       header={<>Accounts</>}
       itemLayout='horizontal'
       dataSource={accountsWithNames}
-      loadMore={<Button type='link' onClick={add} icon={<UserAddOutlined />}>add new account</Button>}
+      loadMore={<div style={{ textAlign: 'right' }}><Button type='link' onClick={add} icon={<PlusOutlined />}>add another account</Button></div>}
       loading={!accountsWithNames.length}
       renderItem={account => (
         <List.Item

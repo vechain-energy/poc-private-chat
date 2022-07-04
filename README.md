@@ -5,4 +5,5 @@
 * Deploy the contract with `node scripts/01-deploy.js`
     * Contract information is written to `src/contract.json`
 * Test application with `yarn start`
-    * `src/hooks/useContract.js` contains the main logic in a single file
+    * `src/hooks/useContract.js` contains the main logic
+    * `src/hooks/helper` contains helper functions for encryption and transaction handling
